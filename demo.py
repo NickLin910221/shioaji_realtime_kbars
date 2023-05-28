@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import shioaji as sj
 from threading import Event
 import datetime as dt

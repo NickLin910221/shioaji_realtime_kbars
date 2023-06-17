@@ -39,7 +39,18 @@ shioaji_realtime_kbars.Kbars(
     period: str = '5min'
 ) -> shioaji.data.Kbars
 ```
-Notes : period format can refer to the [pandas document](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html).
+**Note**
+period format can refer to the [pandas document](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html).
+
+**Warning**
+If you using this extension, you start with the market is opened and transactions frequently time.
+The latest Kline will be a little error.
+
+Example : 
+I use this extension in 8:45:10 in future market.
+The 8:46 Kline will have a little error.
+Ths data after 8:47 will be correct.
+So run this extension before the market is opened.
 
 ## Getting Started
 

@@ -32,7 +32,7 @@ When you use Shioaji Python API for technical analysis, you may need real-time d
 1. To use the extension just initialize the object
 ```
 import shioaji_realtime_kbars
-Contracts = shioaji_realtime_kbars.shioaji_realtime_kbars(api)
+Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
 ```
 2. Get the real-time Kbars data with function
 ```
@@ -79,7 +79,7 @@ df.tail(5)
 Change to
 
 ```
-Contracts = Realtime_Contracts(api)
+Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
 Contracts.subscribe(api.Contracts.Futures.MXF.MXFR1)
 Contracts.subscribe(api.Contracts.Futures.TXF.TXFR1)
 
@@ -90,16 +90,16 @@ def callback(exchange: Exchange, tick : TickSTKv1):
 @api.on_tick_fop_v1()
 def callback(exchange : Exchange, tick : TickFOPv1):
     Contracts.update(tick, "fop")
-
+        
 while True:
-        MXFR1_1K = Contracts.Kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
-        df = pd.DataFrame({**MXFR1_1K })
-        df.ts = pd.to_datetime(df.ts)
-        df.tail(5)
-        MXFR1_5K = Contracts.Kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
-        df = pd.DataFrame({**MXFR1_5K })
-        df.ts = pd.to_datetime(df.ts)
-        df.tail(5)
+    MXFR1_1K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
+    df = pd.DataFrame({**MXFR1_1K })
+    df.ts = pd.to_datetime(df.ts)
+    print(df.tail(2), end = "\n")
+    MXFR1_5K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
+    df = pd.DataFrame({**MXFR1_5K })
+    df.ts = pd.to_datetime(df.ts)
+    print(df.tail(2), end = "\n")
 ```
 
 ## Version

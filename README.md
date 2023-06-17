@@ -25,9 +25,21 @@
 
 When you use Shioaji Python API for technical analysis, you may need real-time data, and in different time dimensions, this package can help you subscribe to tick data and convert it into Kbars type (exactly the same as Shioaji Kbars ), to assist you in converting from Kbars to use more immediate data.
 
-## Built With
+## Description
 
- Here are a few examples.
+1. To use the extension just initialize the object
+```
+import shioaji_realtime_kbars
+Contracts = shioaji_realtime_kbars.shioaji_realtime_kbars(api)
+```
+2. Get the real-time Kbars data with function
+```
+shioaji_realtime_kbars.Kbars(
+    contract: shioaji.contracts.BaseContract,
+    period: str = '5min'
+) -> shioaji.data.Kbars
+```
+Notes : period format can refer to the [pandas document](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html).
 
 ## Getting Started
 
@@ -40,7 +52,7 @@ pip install shioaji_realtime_kbars
 
 ## Usage
 
-Refer to the shioaji sample (https://sinotrade.github.io/tutor/market_data/historical/#kbar)
+Refer to the [shioaji sample](https://sinotrade.github.io/tutor/market_data/historical/#kbar)
 
 ```
 import pandas as pd

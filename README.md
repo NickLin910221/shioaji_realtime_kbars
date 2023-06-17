@@ -15,8 +15,10 @@
 ## Table Of Contents
 
 * [About the Project](#about-the-project)
-* [Built With](#built-with)
+* [Description](#description)
 * [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Version](#version)
 * [Roadmap](#roadmap)
 * [Authors](#authors)
 * [Acknowledgements](#acknowledgements)
@@ -99,6 +101,11 @@ while True:
         df.ts = pd.to_datetime(df.ts)
         df.tail(5)
 ```
+
+## Version
+# v1.0.1 
+* Fix Naming Problem
+# v1.0.0
 
 ## Roadmap
 

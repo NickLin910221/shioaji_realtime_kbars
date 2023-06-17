@@ -42,7 +42,7 @@ shioaji_realtime_kbars.Kbars(
 **Note**
 period format can refer to the [pandas document](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html).
 
-**Warning**
+:warning
 If you using this extension, you start with the market is opened and transactions frequently time.
 The latest Kline will be a little error.
 

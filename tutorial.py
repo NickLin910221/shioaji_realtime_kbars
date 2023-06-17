@@ -1,8 +1,7 @@
-import shioaji_realtime_kbars 
+import shioaji_realtime_kbars as shioaji_realtime_kbars
 from shioaji import TickSTKv1, TickFOPv1, Exchange
 import shioaji as sj
 import pandas as pd
-
 
 if __name__ == "__main__":
     api = sj.Shioaji()
@@ -12,7 +11,7 @@ if __name__ == "__main__":
         secret_key="YOUR_API_SECRET"
     )
 
-    Contracts = shioaji_realtime_kbars.shioaji_realtime_kbars(api)
+    Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
     Contracts.subscribe(api.Contracts.Futures.MXF.MXFR1)
     Contracts.subscribe(api.Contracts.Futures.TXF.TXFR1)
 
@@ -25,11 +24,11 @@ if __name__ == "__main__":
         Contracts.update(tick, "fop")
         
     while True:
-        MXFR1_1K = Contracts.Kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
+        MXFR1_1K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
         df = pd.DataFrame({**MXFR1_1K })
         df.ts = pd.to_datetime(df.ts)
         print(df.tail(2), end = "\n")
-        MXFR1_5K = Contracts.Kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
+        MXFR1_5K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
         df = pd.DataFrame({**MXFR1_5K })
         df.ts = pd.to_datetime(df.ts)
         print(df.tail(2), end = "\n")

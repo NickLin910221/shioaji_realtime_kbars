@@ -2,9 +2,10 @@ import shioaji as sj
 import datetime as dt
 import math
 import pandas as pd
-from shioaji import data
+from shioaji.data import Kbars
 
-class realtime_Kbars(data.Kbars):
+class RealtimeKbars(Kbars):
+    
     def update(self, data):
         if self.ts[-1] < data["ts"]:
             self.ts.append(data["ts"])
@@ -29,7 +30,7 @@ class realtime_Kbars(data.Kbars):
         kbars_df.ts = pd.to_datetime(kbars_df.ts)
         kbars_df = kbars_df.set_index(kbars_df.ts)
         kbars_df = kbars_df.resample(f'{period}', closed='right', label='right').apply({'Open': 'first', 'High': 'max', 'Low': 'min', 'Close': 'last', 'Volume': 'sum', 'Amount': 'sum'})
-        kbars = data.Kbars(ts = kbars_df.index.values.tolist(), 
+        kbars = Kbars(ts = kbars_df.index.values.tolist(), 
                            Open = kbars_df["Open"].values.tolist(), 
                            High = kbars_df["High"].values.tolist(), 
                            Low = kbars_df["Low"].values.tolist(), 
@@ -38,7 +39,8 @@ class realtime_Kbars(data.Kbars):
                            Amount = kbars_df["Amount"].values.tolist())
         return kbars
 
-class RealtimeKbars:
+class Contracts:
+
     __slots__ = ["api", "contract", "last_days", "kbars", "cache"]
 
     def __init__(self, api, contract, last_days = 0):
@@ -54,7 +56,7 @@ class RealtimeKbars:
             start = dt.datetime.strftime(dt.datetime.today() - dt.timedelta(days = self.last_days), "%Y-%m-%d"), 
             end = dt.datetime.strftime(dt.datetime.now(), "%Y-%m-%d")
         )
-        self.kbars = realtime_Kbars(**res)        
+        self.kbars = RealtimeKbars(**res)        
 
     def subscribe(self):
         self.api.quote.subscribe(
@@ -66,11 +68,13 @@ class RealtimeKbars:
     def update(self, tick):
         self.kbars.update({"ts" : (math.floor(int(tick.datetime.replace(tzinfo=dt.timezone.utc).timestamp() * 1000000000) / 60000000000) + 1) * 60000000000, "Open" : float(tick.open), "High" : float(tick.high), "Low" : float(tick.low), "Close" : float(tick.close), "Volume" :  tick.volume, "Amount" : float(tick.amount)})
 
-    def getKlines(self, period):
+    def getklines(self, period):
         return self.kbars.getKlines(period)
     
-class shioaji_realtime_kbars():
+class ShioajiRealtimeKbars():
+
     __slots__ = ["api", "stk_Contracts", "fop_Contracts"]
+
     def __init__(self, api):
         self.api = api
         self.stk_Contracts, self.fop_Contracts = [], []
@@ -79,11 +83,11 @@ class shioaji_realtime_kbars():
         if contract.__class__ is sj.contracts.Stock:
             for _contract_ in self.stk_Contracts:
                 if contract.contract.code == _contract_.contract.code: return
-            self.stk_Contracts.append(RealtimeKbars(self.api, contract, last_days = last_days))    
+            self.stk_Contracts.append(Contracts(self.api, contract, last_days = last_days))    
         elif contract.__class__ is sj.contracts.Future or contract.__class__ is sj.contracts.Option:
             for _contract_ in self.fop_Contracts:
                 if contract.target_code == _contract_.contract.target_code or contract.code == _contract_.contract.code: return
-            self.fop_Contracts.append(RealtimeKbars(self.api, contract, last_days = last_days))
+            self.fop_Contracts.append(Contracts(self.api, contract, last_days = last_days))
             
     def update(self, tick, type):
         if type == "stk":
@@ -93,12 +97,12 @@ class shioaji_realtime_kbars():
             for _contract_ in self.fop_Contracts:
                 if tick.code == _contract_.contract.target_code or tick.code == _contract_.contract.code: _contract_.update(tick)
     
-    def Kbars(self, contract, period):
+    def kbars(self, contract, period):
         if contract.__class__ is sj.contracts.Stock:
             for _contract_ in self.stk_Contracts:
-                if contract.contract.code == _contract_.contract.code: return _contract_.getKlines(period)
-            return data.Kbars(ts = [], Open = [], High = [], Low = [], Close = [], Volume = [], Amount = []) 
+                if contract.contract.code == _contract_.contract.code: return _contract_.getklines(period)
+            return Kbars(ts = [], Open = [], High = [], Low = [], Close = [], Volume = [], Amount = []) 
         elif contract.__class__ is sj.contracts.Future or contract.__class__ is sj.contracts.Option:
             for _contract_ in self.fop_Contracts:
-                if contract.code == _contract_.contract.code: return _contract_.getKlines(period)
-            return data.Kbars(ts = [], Open = [], High = [], Low = [], Close = [], Volume = [], Amount = [])
+                if contract.code == _contract_.contract.code: return _contract_.getklines(period)
+            return Kbars(ts = [], Open = [], High = [], Low = [], Close = [], Volume = [], Amount = [])

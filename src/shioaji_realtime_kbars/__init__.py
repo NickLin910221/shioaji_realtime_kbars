@@ -1,1 +1,1 @@
-from shioaji_realtime_kbars.shioaji_realtime_kbars import shioaji_realtime_kbars as shioaji_realtime_kbars
+from shioaji_realtime_kbars.shioaji_realtime_kbars import ShioajiRealtimeKbars

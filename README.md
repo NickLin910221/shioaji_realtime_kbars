@@ -103,6 +103,8 @@ while True:
 ```
 
 ## Version
+### v1.0.2
+#### * Fix Stock kbars problem [issue](https://github.com/NickLin910221/shioaji_realtime_kbars/issues/1)
 ### v1.0.1 
 #### * Fix Naming Problem
 ### v1.0.0

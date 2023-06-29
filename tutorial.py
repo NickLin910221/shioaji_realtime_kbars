@@ -12,6 +12,7 @@ if __name__ == "__main__":
     )
 
     Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
+    Contracts.subscribe(api.Contracts.Stocks.TSE.TSE2330)
     Contracts.subscribe(api.Contracts.Futures.MXF.MXFR1)
     Contracts.subscribe(api.Contracts.Futures.TXF.TXFR1)
 
@@ -24,6 +25,10 @@ if __name__ == "__main__":
         Contracts.update(tick, "fop")
         
     while True:
+        TSMC_1K = Contracts.kbars(api.Contracts.Stocks.TSE.TSE2330, "1min")
+        df = pd.DataFrame({**TSMC_1K })
+        df.ts = pd.to_datetime(df.ts)
+        print(df.tail(2), end = "\n")
         MXFR1_1K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
         df = pd.DataFrame({**MXFR1_1K })
         df.ts = pd.to_datetime(df.ts)

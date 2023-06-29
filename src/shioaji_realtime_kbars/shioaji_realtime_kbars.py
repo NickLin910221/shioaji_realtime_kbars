@@ -100,7 +100,7 @@ class ShioajiRealtimeKbars():
     def kbars(self, contract, period):
         if contract.__class__ is sj.contracts.Stock:
             for _contract_ in self.stk_Contracts:
-                if contract.contract.code == _contract_.contract.code: return _contract_.getklines(period)
+                if contract.code == _contract_.contract.code: return _contract_.getklines(period)
             return Kbars(ts = [], Open = [], High = [], Low = [], Close = [], Volume = [], Amount = []) 
         elif contract.__class__ is sj.contracts.Future or contract.__class__ is sj.contracts.Option:
             for _contract_ in self.fop_Contracts:

@@ -82,7 +82,7 @@ class ShioajiRealtimeKbars():
     def subscribe(self, contract, last_days = 0):
         if contract.__class__ is sj.contracts.Stock:
             for _contract_ in self.stk_Contracts:
-                if contract.contract.code == _contract_.contract.code: return
+                if contract.code == _contract_.contract.code: return
             self.stk_Contracts.append(Contracts(self.api, contract, last_days = last_days))    
         elif contract.__class__ is sj.contracts.Future or contract.__class__ is sj.contracts.Option:
             for _contract_ in self.fop_Contracts:

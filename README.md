@@ -104,7 +104,7 @@ while True:
 
 ## Version
 ### v1.0.4 (2023/7/17)
-#### * Fix resamplind will have some NaN rows
+#### * Fix resampling will have some NaN rows
 ### v1.0.3 (2023/6/30)
 ### v1.0.2 (2023/6/30)
 #### * Fix Stock kbars problem [issue](https://github.com/NickLin910221/shioaji_realtime_kbars/issues/1)

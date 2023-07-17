@@ -30,6 +30,7 @@ class RealtimeKbars(Kbars):
         kbars_df.ts = pd.to_datetime(kbars_df.ts)
         kbars_df = kbars_df.set_index(kbars_df.ts)
         kbars_df = kbars_df.resample(f'{period}', closed='right', label='right').apply({'Open': 'first', 'High': 'max', 'Low': 'min', 'Close': 'last', 'Volume': 'sum', 'Amount': 'sum'})
+        kbars_df = kbars_df.dropna(subset=['Open', 'High', 'Low', 'Close'])
         kbars = Kbars(ts = kbars_df.index.values.tolist(), 
                            Open = kbars_df["Open"].values.tolist(), 
                            High = kbars_df["High"].values.tolist(), 

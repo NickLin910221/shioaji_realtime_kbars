@@ -10,7 +10,7 @@
   </p>
 </p>
 
-![Contributors](https://img.shields.io/github/contributors/NickLin910221/Shioaji_Realtime_Kline?color=dark-green) ![Stargazers](https://img.shields.io/github/stars/NickLin910221/Shioaji_Realtime_Kline?style=social) ![Issues](https://img.shields.io/github/issues/NickLin910221/Shioaji_Realtime_Kline) ![PyPI Latest Release](https://pypi.org/project/shioaji-realtime-kbars/) ![PyPI Downloads](https://pypi.org/project/shioaji-realtime-kbars/)
+![Contributors](https://img.shields.io/github/contributors/NickLin910221/Shioaji_Realtime_Kline?color=dark-green) ![Stargazers](https://img.shields.io/github/stars/NickLin910221/Shioaji_Realtime_Kline?style=social) ![Issues](https://img.shields.io/github/issues/NickLin910221/Shioaji_Realtime_Kline) [![PyPI Latest Release](https://img.shields.io/pypi/v/shioaji-realtime-kbars.svg)](https://pypi.org/project/shioaji-realtime-kbars/) [![PyPI Downloads](https://img.shields.io/pypi/dm/shioaji-realtime-kbars.svg?label=PyPI%20downloads)](https://pypi.org/project/shioaji-realtime-kbars/)
 
 ## Table Of Contents
 

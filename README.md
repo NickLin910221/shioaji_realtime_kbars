@@ -63,6 +63,7 @@ pip install shioaji_realtime_kbars
 
 ## Usage
 
+### kbars
 Refer to the [shioaji sample](https://sinotrade.github.io/tutor/market_data/historical/#kbar)
 
 ```
@@ -102,7 +103,52 @@ while True:
     print(df.tail(2), end = "\n")
 ```
 
+### Callback funtion
+shioaji_realtime_kbars.ShioajiRealtimeKbars.subscribe?
+
+Signature:
+shioaji_realtime_kbars.ShioajiRealtimeKbars.subscribe(
+    contract: List[Union[shioaji.contracts.Option, shioaji.contracts.Future, shioaji.contracts.Stock, shioaji.contracts.Index]],
+    last_days: int = 0,
+    cb: Any = List[[callback_function, period]]
+) -> None
+
+### Example
+If you want to clearly write your strategy. You can refer to example
+
+```
+def strategy(period, kbars):
+    print(period)
+    df = pd.DataFrame({**kbars}, columns = ["ts", "Open", "High", "Low", "Close", "Volume", "Amount"])
+    df.ts = pd.to_datetime(df.ts)
+
+    ### Write your strategy here ###
+
+    print(df.tail(5), end = "\n")
+
+if __name__ == "__main__":
+
+    api = sj.Shioaji(simulation = True)
+
+    api.login(
+        api_key=config.API_KEY, 
+        secret_key=config.API_SECRET
+    )
+
+    Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
+    Contracts.subscribe(api.Contracts.Futures.MXF.MXFR1, last_days = 3, cb = [[strategy, "1min"], [strategy, "5min"]])
+
+    @api.on_tick_fop_v1()
+    def callback(exchange : Exchange, tick : TickFOPv1):
+        Contracts.update(tick, "fop")
+
+    Event().wait()
+```
+
+
 ## Version
+### v1.0.5 (2023/7/19)
+#### * Add callback function
 ### v1.0.4 (2023/7/17)
 #### * Fix resampling will have some NaN rows
 ### v1.0.3 (2023/6/30)

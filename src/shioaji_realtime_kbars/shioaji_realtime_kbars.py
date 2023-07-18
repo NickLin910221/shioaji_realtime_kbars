@@ -42,14 +42,15 @@ class RealtimeKbars(Kbars):
 
 class Contracts:
 
-    __slots__ = ["api", "contract", "last_days", "kbars", "cache"]
+    __slots__ = ["api", "contract", "last_days", "kbars", "cache", "cb"]
 
-    def __init__(self, api, contract, last_days = 0):
+    def __init__(self, api, contract, cb, last_days = 0):
         self.api = api
         self.contract = contract
         self.last_days = last_days
         self.fetchdata()
         self.subscribe()
+        self.cb = cb
 
     def fetchdata(self):
         res = self.api.kbars(
@@ -68,6 +69,9 @@ class Contracts:
 
     def update(self, tick):
         self.kbars.update({"ts" : (math.floor(int(tick.datetime.replace(tzinfo=dt.timezone.utc).timestamp() * 1000000000) / 60000000000) + 1) * 60000000000, "Open" : float(tick.open), "High" : float(tick.high), "Low" : float(tick.low), "Close" : float(tick.close), "Volume" :  tick.volume, "Amount" : float(tick.amount)})
+        for cb, period in self.cb:
+            print(cb, period)
+            cb(period, self.getklines(period))
 
     def getklines(self, period):
         return self.kbars.getKlines(period)
@@ -80,15 +84,15 @@ class ShioajiRealtimeKbars():
         self.api = api
         self.stk_Contracts, self.fop_Contracts = [], []
 
-    def subscribe(self, contract, last_days = 0):
+    def subscribe(self, contract, last_days = 0, cb = []):
         if contract.__class__ is sj.contracts.Stock:
             for _contract_ in self.stk_Contracts:
                 if contract.code == _contract_.contract.code: return
-            self.stk_Contracts.append(Contracts(self.api, contract, last_days = last_days))    
+            self.stk_Contracts.append(Contracts(self.api, contract, last_days = last_days, cb = cb))    
         elif contract.__class__ is sj.contracts.Future or contract.__class__ is sj.contracts.Option:
             for _contract_ in self.fop_Contracts:
                 if contract.target_code == _contract_.contract.target_code or contract.code == _contract_.contract.code: return
-            self.fop_Contracts.append(Contracts(self.api, contract, last_days = last_days))
+            self.fop_Contracts.append(Contracts(self.api, contract, last_days = last_days, cb = cb))
             
     def update(self, tick, type):
         if type == "stk":

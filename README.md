@@ -104,6 +104,7 @@ while True:
 ```
 
 ### Callback funtion
+```
 shioaji_realtime_kbars.ShioajiRealtimeKbars.subscribe?
 
 Signature:
@@ -112,6 +113,7 @@ shioaji_realtime_kbars.ShioajiRealtimeKbars.subscribe(
     last_days: int = 0,
     cb: Any = List[[callback_function, period]]
 ) -> None
+```
 
 ### Example
 If you want to clearly write your strategy. You can refer to example

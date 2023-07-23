@@ -149,16 +149,11 @@ if __name__ == "__main__":
 
 
 ## Version
-### v1.0.5 (2023/7/19)
-#### * Add callback function
-### v1.0.4 (2023/7/17)
-#### * Fix resampling will have some NaN rows
-### v1.0.3 (2023/6/30)
-### v1.0.2 (2023/6/30)
-#### * Fix Stock kbars problem [issue](https://github.com/NickLin910221/shioaji_realtime_kbars/issues/1)
-### v1.0.1 
-#### * Fix Naming Problem
-### v1.0.0
+- v1.0.5 (2023/7/19) Add callback function
+- v1.0.4 (2023/7/17)
+- v1.0.3 (2023/6/30) Fix Stock kbars problem [issue](https://github.com/NickLin910221/shioaji_realtime_kbars/issues/1)
+- v1.0.1 Fix Naming Problem
+- v1.0.0
 
 ## Roadmap
 

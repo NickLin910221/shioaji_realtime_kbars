@@ -3,11 +3,21 @@ import datetime as dt
 import math
 import pandas as pd
 from shioaji.data import Kbars
+from datetime import datetime
+import re
 
 class RealtimeKbars(Kbars):
     
     def update(self, data):
-        if self.ts[-1] < data["ts"]:
+        if len(self.ts) == 0:
+            self.ts.append(data["ts"])
+            self.Open.append(data["Close"])
+            self.High.append(data["Close"])
+            self.Low.append(data["Close"])
+            self.Close.append(data["Close"])
+            self.Volume.append(data["Volume"])
+            self.Amount.append(data["Amount"])
+        elif self.ts[-1] < data["ts"]:
             self.ts.append(data["ts"])
             self.Open.append(data["Close"])
             self.High.append(data["Close"])
@@ -68,9 +78,9 @@ class Contracts:
         )
 
     def update(self, tick):
+        if tick.simtrade == 1: return
         self.kbars.update({"ts" : (math.floor(int(tick.datetime.replace(tzinfo=dt.timezone.utc).timestamp() * 1000000000) / 60000000000) + 1) * 60000000000, "Open" : float(tick.open), "High" : float(tick.high), "Low" : float(tick.low), "Close" : float(tick.close), "Volume" :  tick.volume, "Amount" : float(tick.amount)})
         for cb, period in self.cb:
-            print(cb, period)
             cb(period, self.getklines(period))
 
     def getklines(self, period):

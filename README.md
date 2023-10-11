@@ -149,8 +149,7 @@ if __name__ == "__main__":
 
 
 ## Version
-- v1.0.7 (2023/10/11) Add TSE, TFE simtrade filter
-                      Fix kbars with no historical problem
+- v1.0.7 (2023/10/11) Add TSE, TFE simtrade filter, Fix kbars with no historical problem
 - v1.0.6 (2023/7/28) Fis display
 - v1.0.5 (2023/7/19) Add callback function
 - v1.0.4 (2023/7/17)

@@ -31,7 +31,7 @@ If you have any ideas or suggestions, we sincerely welcome you to contact us via
 
 Assuming this project has been of great help to you, you are welcome to support my continued efforts through the following means.
 
-[![Donate with PayPal](https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png | width = 50)](https://www.paypal.me/yourui0221)
+[![Donate with PayPal](https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png = 50x)](https://www.paypal.me/yourui0221)
 
 ETH : 0xb25aD6A441E89cFCa7850bA47A0d74131374d616
 

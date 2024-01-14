@@ -32,13 +32,6 @@ If you have any ideas or suggestions, we sincerely welcome you to contact us via
 Assuming this project has been of great help to you, you are welcome to support my continued efforts through the following means.
 
 [![Donate with PayPal](https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png)](https://www.paypal.me/yourui0221)
-
-[
-  ![Donate with PayPal]
-  (https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)
-]
-(https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QT54MSJR6QU7Y)
-
 ETH : 0xb25aD6A441E89cFCa7850bA47A0d74131374d616
 
 ## Description

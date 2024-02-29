@@ -3,8 +3,6 @@ import datetime as dt
 import math
 import pandas as pd
 from shioaji.data import Kbars
-from datetime import datetime
-import re
 
 class RealtimeKbars(Kbars):
     
@@ -41,18 +39,12 @@ class RealtimeKbars(Kbars):
         kbars_df = kbars_df.set_index(kbars_df.ts)
         kbars_df = kbars_df.resample(f'{period}', closed='right', label='right').apply({'Open': 'first', 'High': 'max', 'Low': 'min', 'Close': 'last', 'Volume': 'sum', 'Amount': 'sum'})
         kbars_df = kbars_df.dropna(subset=['Open', 'High', 'Low', 'Close'])
-        kbars = Kbars(ts = kbars_df.index.values.tolist(), 
-                           Open = kbars_df["Open"].values.tolist(), 
-                           High = kbars_df["High"].values.tolist(), 
-                           Low = kbars_df["Low"].values.tolist(), 
-                           Close = kbars_df["Close"].values.tolist(), 
-                           Volume = kbars_df["Volume"].values.tolist(), 
-                           Amount = kbars_df["Amount"].values.tolist())
-        return kbars
+
+        return kbars_df
 
 class Contracts:
 
-    __slots__ = ["api", "contract", "last_days", "kbars", "cache", "cb"]
+    __slots__ = ["api", "contract", "last_days", "kbars", "cache", "response", "cb"]
 
     def __init__(self, api, contract, cb, last_days = 0):
         self.api = api
@@ -68,7 +60,8 @@ class Contracts:
             start = dt.datetime.strftime(dt.datetime.today() - dt.timedelta(days = self.last_days), "%Y-%m-%d"), 
             end = dt.datetime.strftime(dt.datetime.now(), "%Y-%m-%d")
         )
-        self.kbars = RealtimeKbars(**res)        
+        self.kbars = RealtimeKbars(**res)
+        self.response = Kbars(**res)
 
     def subscribe(self):
         self.api.quote.subscribe(
@@ -84,7 +77,15 @@ class Contracts:
             cb(period, self.getklines(period))
 
     def getklines(self, period):
-        return self.kbars.getKlines(period)
+        res                     = self.kbars.getKlines(period)
+        self.response.ts        = res.index.values.tolist()
+        self.response.Open      = res["Open"].values.tolist()
+        self.response.High      = res["High"].values.tolist()
+        self.response.Low       = res["Low"].values.tolist()
+        self.response.Close     = res["Close"].values.tolist()
+        self.response.Volume    = res["Volume"].values.tolist()
+        self.response.Amount    = res["Amount"].values.tolist()
+        return self.response
     
 class ShioajiRealtimeKbars():
 

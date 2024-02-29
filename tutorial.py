@@ -4,11 +4,11 @@ import shioaji as sj
 import pandas as pd
 
 if __name__ == "__main__":
-    api = sj.Shioaji()
+    api = sj.Shioaji(simulation = True)
 
     api.login(
-        api_key="YOUR_API_KEY", 
-        secret_key="YOUR_API_SECRET"
+        api_key = "YOUR_API_KEY", 
+        secret_key = "YOUR_API_SECRET"
     )
 
     Contracts = shioaji_realtime_kbars.ShioajiRealtimeKbars(api)
@@ -23,17 +23,20 @@ if __name__ == "__main__":
     @api.on_tick_fop_v1()
     def callback(exchange : Exchange, tick : TickFOPv1):
         Contracts.update(tick, "fop")
-        
-    while True:
-        TSMC_1K = Contracts.kbars(api.Contracts.Stocks.TSE.TSE2330, "1min")
-        df = pd.DataFrame({**TSMC_1K })
-        df.ts = pd.to_datetime(df.ts)
-        print(df.tail(2), end = "\n")
-        MXFR1_1K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
-        df = pd.DataFrame({**MXFR1_1K })
-        df.ts = pd.to_datetime(df.ts)
-        print(df.tail(2), end = "\n")
-        MXFR1_5K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
-        df = pd.DataFrame({**MXFR1_5K })
-        df.ts = pd.to_datetime(df.ts)
-        print(df.tail(2), end = "\n")
+    
+    try:
+        while True:
+            TSMC_1K = Contracts.kbars(api.Contracts.Stocks.TSE.TSE2330, "1min")
+            df = pd.DataFrame({**TSMC_1K })
+            df.ts = pd.to_datetime(df.ts)
+            print(df.tail(2), end = "\n")
+            MXFR1_1K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "1min")
+            df = pd.DataFrame({**MXFR1_1K })
+            df.ts = pd.to_datetime(df.ts)
+            print(df.tail(2), end = "\n")
+            MXFR1_5K = Contracts.kbars(api.Contracts.Futures.MXF.MXFR1, "5min")
+            df = pd.DataFrame({**MXFR1_5K })
+            df.ts = pd.to_datetime(df.ts)
+            print(df.tail(2), end = "\n")
+    except KeyboardInterrupt:
+        api.logout()

@@ -128,10 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Pypi
-*.cfg
-*.toml
-
 # test
 test/
 *.sh

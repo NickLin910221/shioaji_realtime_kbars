@@ -157,6 +157,7 @@ if __name__ == "__main__":
 
 
 ## Version
+- v1.1.1 (2026/5/22) Fix import crash on newer shioaji where KBars is a native, non-subclassable type
 - v1.1.0 (2024/2/27) Improve with memory allocation
 - v1.0.7 (2023/10/11) Add TSE, TFE simtrade filter, Fix kbars with no historical problem
 - v1.0.6 (2023/7/28) Fis display

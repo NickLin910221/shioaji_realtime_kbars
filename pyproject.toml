@@ -4,3 +4,19 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.semantic_release]
+# Git tag is the source of truth for released versions, e.g. v1.2.3
+tag_format = "v{version}"
+# File(s) PSR rewrites with the computed version on each release.
+version_variables = ["setup.cfg:version"]
+# Build the sdist + wheel after the bump so dist/ carries the new version.
+build_command = "python -m pip install build && python -m build"
+# [skip ci] stops the release commit from re-triggering this workflow.
+commit_message = "chore(release): v{version} [skip ci]"
+# feat -> minor, fix/perf -> patch, BREAKING CHANGE / ! -> major
+commit_parser = "angular"
+
+[tool.semantic_release.branches.main]
+match = "main"
+prerelease = false

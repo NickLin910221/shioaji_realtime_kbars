@@ -4,8 +4,17 @@ import math
 import pandas as pd
 from shioaji.data import Kbars
 
+
 class RealtimeKbars(Kbars):
-    
+    def __init__(self, ts, Open, High, Low, Close, Volume, Amount, **kwargs):
+        self.ts = list(ts)
+        self.Open = list(Open)
+        self.High = list(High)
+        self.Low = list(Low)
+        self.Close = list(Close)
+        self.Volume = list(Volume)
+        self.Amount = list(Amount)
+
     def update(self, data):
         if len(self.ts) == 0:
             self.ts.append(data["ts"])

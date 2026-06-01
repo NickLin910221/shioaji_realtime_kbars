@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v1.1.2 (2026-06-01)
+
+### Bug Fixes
+
+- Replace Kbars subclass with standalone RealtimeKbars and support new subscribe API
+  ([`7e62dde`](https://github.com/NickLin910221/shioaji_realtime_kbars/commit/7e62dde78f8cd26b28c0e64fe8ca97b021af9ba8))
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
+
 ## v1.1.1 (2026-05-22)
 
 ### Bug Fixes
